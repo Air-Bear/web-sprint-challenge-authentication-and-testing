@@ -4,21 +4,26 @@ const User = require("./auth-model");
 const jwt = require("jsonwebtoken");
 const restricted = require("./authenticate-middleware");
 
-router.post('/register', (req, res) => {
+router.post('/register', (req, res, next) => {
   // implement registration
-  const hash = bcryptjs.hashSync(req.body.password, 10)
-  req.body.password = hash;
+  if(req.body.password && req.body.username){
+    const hash = bcryptjs.hashSync(req.body.password, 10)
+    req.body.password = hash;
 
-  User.add(req.body)
+    User.add(req.body)
     .then(user => {
       res.status(201).json(user);
     })
     .catch(err => {
       next({apiCode: 500, apiMessage: "error registering", ...err});
     });
+  } else {
+    next({apiCode: 500, apiMessage: "error registering"}); 
+  }
+  
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
   // implement login
   let {username, password} = req.body;
 
@@ -30,6 +35,8 @@ router.post('/login', (req, res) => {
           message: `Logged in as: ${user.username}`,
           token: token
         });
+      } else {
+        next({apiCode: 401, apiMessage: "invalid credentials"})
       }
     })
     .catch(err => {
