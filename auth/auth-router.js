@@ -30,10 +30,11 @@ router.post('/login', (req, res, next) => {
   User.findBy(username)
     .then(user => {
       if(user && bcryptjs.compareSync(password, user.password)){
-        const token = generateToken(user);
+        //const token = generateToken(user);
+        req.session.user = user;
         res.status(200).json({
           message: `Logged in as: ${user.username}`,
-          token: token
+          //token: token
         });
       } else {
         next({apiCode: 401, apiMessage: "invalid credentials"})
@@ -44,21 +45,21 @@ router.post('/login', (req, res, next) => {
     });
 });
 
-function generateToken(user){
-  payload = {
-    subject: user.id,
-    username: user.username
-  };
+// function generateToken(user){
+//   payload = {
+//     subject: user.id,
+//     username: user.username
+//   };
 
-  const secret = "I'm the best around";
+//   const secret = "I'm the best around";
 
-  const options = {
-    expiresIn: "1h"
-  };
+//   const options = {
+//     expiresIn: "1h"
+//   };
 
-  const token = jwt.sign(payload, secret, options);
+//   const token = jwt.sign(payload, secret, options);
 
-  return token;
-}
+//   return token;
+// }
 
 module.exports = router;

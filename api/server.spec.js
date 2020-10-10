@@ -34,7 +34,7 @@ describe("server.js", () => {
             expect(res.status).toBe(200);
         });
         it("should return with a status of 401 for invalid user", async() => {
-            const res = await request(server).post("/api/auth/login").send({username: "doesnt exist", passwrod: "doesnt exist"})
+            const res = await request(server).post("/api/auth/login").send({username: "doesnt exist", password: "doesnt exist"})
         });
     });
 });
