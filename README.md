@@ -26,11 +26,19 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
 
+    JSON web tokens uses an encoded header and payload, along with a hashed signature, in order to implement user authentication. If the header or the payload changes, then the subsequent hashed signature also changes with our secret being hashed into the object in order to keep the signatuer from being sniped. Sessions would use cookies and express sessions in order to store a time limited cookie that validates whether the session is current/authenticated. Both have built in time out functions that render the method of authenication invalid after it elapses.
+
 2. What does `bcrypt` do to help us store passwords in a secure manner.
+
+    bcryptjs is a library that uses a hashing algorithm in order to take our password string and hash it into a hexadecimal string. it also "salts" the hash, by taking another string, adding it to our original password string, and then hashing it all together to complicate the process and make it more difficult to break the algorithm. 
 
 3. How are unit tests different from integration and end-to-end testing.
 
+    unit testing is smaller in scope and normally tests one collective unit. Such as a log-in form, or a visual cue. Integration testing tests how multiple units work together and exchange information. end-to-end testing replicates the user experience as closely as possible as they would interact with multiple units in a whole session.
+
 4. How _Test Driven Development_ changes the way we write applications and tests.
+
+    test driven development emphasizes coding with tests in mind. You write the test first and then implement the code in order to successfully complete the test. This helps create an application that is much more easily maintained for other developers because it results in a tight test implementation that will quickly warn if further implementations have broken integral systems that were already in place as a result of unintended effects.
 
 You are expected to be able to answer questions in these areas. Your responses contribute to your Sprint Challenge grade.
 
